@@ -1361,8 +1361,7 @@ class Batman.Controller extends Batman.Object
 
     @[action](params)
 
-    if not @_actedDuringAction
-      @render()
+    @render() unless @_actedDuringAction
 
     if filters = @constructor._batman?.get('afterFilters')
       for filter in filters
@@ -1373,8 +1372,10 @@ class Batman.Controller extends Batman.Object
 
     Batman.historyManager?.redirect = oldRedirect
 
-    $redirect(@_afterFilterRedirect) if @_afterFilterRedirect
+    redirectTo = @_afterFilterRedirect
     delete @_afterFilterRedirect
+
+    $redirect(redirectTo) if redirectTo
 
   redirect: (url) =>
     throw 'DoubleRedirectError' if @_actedDuringAction
