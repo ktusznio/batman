@@ -42,11 +42,11 @@ exports.triggerKey = (domNode, keyCode) ->
   domNode.dispatchEvent(_getKeyEvent("keypress", keyCode))
   domNode.dispatchEvent(_getKeyEvent("keyup", keyCode))
 
-exports.triggerSubmit = (domNode) ->
-  # TODO: Verify portability.
-  evt = document.createEvent('HTMLEvents')
-  evt.initEvent('submit', true, true)
-  domNode.dispatchEvent(evt)
+exports.withNodeInDom = (node, callback) ->
+  node = $(node)
+  $('body').append(node)
+  do callback
+  node.remove()
 
 # Helper function for rendering a view given a context. Optionally returns a jQuery of the nodes,
 # and calls a callback with the same. Beware of the 50ms timeout when rendering views, tests should
