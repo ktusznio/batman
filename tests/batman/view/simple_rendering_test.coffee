@@ -389,8 +389,8 @@ asyncTest 'should bind to the value of radio buttons', ->
 
 QUnit.module 'one-way bindings'
 
-asyncTest 'read should update only the binding value', 3, ->
-  source = '<input type="text" data-read="foo" value="start"/>'
+asyncTest 'source should update only the binding value', 3, ->
+  source = '<input type="text" data-source="foo" value="start"/>'
   context = Batman foo: null
   helpers.render source, context, (node) ->
     node = node[0]
@@ -403,8 +403,8 @@ asyncTest 'read should update only the binding value', 3, ->
       delay =>
         equal node.value, 'bar'
 
-asyncTest 'write should update only the bound node', 3, ->
-  source = '<input type="text" data-write="foo" value="start"/>'
+asyncTest 'target should update only the bound node', 3, ->
+  source = '<input type="text" data-target="foo" value="start"/>'
   context = Batman foo: 'bar'
   helpers.render source, context, (node) ->
     node = node[0]
@@ -417,8 +417,8 @@ asyncTest 'write should update only the bound node', 3, ->
       delay =>
         equal node.value, 'end'
 
-asyncTest 'attribute write should update only the bound attribute', 3, ->
-  source = '<input type="text" data-write-width="foo.width" value="start" width="10"/>'
+asyncTest 'attribute target should update only the bound attribute', 3, ->
+  source = '<input type="text" data-target-width="foo.width" value="start" width="10"/>'
   context = Batman
     foo: Batman
       width: 20
@@ -433,8 +433,8 @@ asyncTest 'attribute write should update only the bound attribute', 3, ->
       delay =>
         equal node.getAttribute('width'), '40'
 
-asyncTest 'data-write and data-read work correctly on the same node', ->
-  source = '<input type="text" data-read="there" data-write="here" value="start"/>'
+asyncTest 'data-target and data-source work correctly on the same node', ->
+  source = '<input type="text" data-source="there" data-target="here" value="start"/>'
   context = Batman here: 'here', there: ''
   helpers.render source, context, (node) ->
     node = node[0]
